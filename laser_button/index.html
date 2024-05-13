@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /*put items at the center*/
+    align-items: center;
+    min-height: 100vh;
+    background-color: #333;
+    gap: 50px;
+}
+
+a {
+    position: relative;
+    background-color: antiquewhite;
+    text-align: center;
+    background-color: rgba(45, 45, 45, 1);
+    padding: 20px 60px;
+    font-size: 1.5em;
+    color: #999;
+    border-radius: 50px;
+    text-decoration-line: none; /*remove underline*/
+    transition: 0.5s;
+    overflow: hidden;
+}
+
+a:hover {
+    color: var(--clr);
+    text-shadow: 1px 1px 15px var(--clr),
+                0px 0px 40px var(--clr);
+}
+
+a::before {
+    content: '';
+    position: absolute;
+    opacity: 0;
+    top: var(--y); /*dynamic position controlled by the mouse*/
+    left: var(--x);
+    width: 120px;
+    height: 120px;
+    transform: translate(-50%,-50%);
+    background: radial-gradient(var(--clr), transparent, transparent);
+    transition: 0.5s, top 0s, left 0s;
+}
+
+a::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    inset: 2px;
+    border-radius: 120px;
+    background-color: rgba(45, 45, 45, .9);
+}
+
+a:hover::before {
+    opacity: 1;
+}
+
+span {
+    position: relative; /*Give the span a z-index, so that the text is on top of the ::after.*/
+    z-index: 1;
+}
+
+</style>
+<body>
+
+    <a href="#" style="--clr: #0f0; --x: 0; --y: 0;"><span>BUTTON</span></a>
+    <a href="#" style="--clr: #ff0; --x: 0; --y: 0;"><span>BUTTON</span></a>
+    <a href="#" style="--clr: #f0f; --x: 0; --y: 0;"><span>BUTTON</span></a>
+</body>
+</html>
+<script>
+    let btns = document.querySelectorAll("a");
+    btns.forEach(btn => {
+        btn.onmousemove = (e) => {
+            let x = e.pageX - btn.offsetLeft;
+            let y = e.pageY - btn.offsetTop;
+            btn.style.setProperty("--x", x + "px");
+            btn.style.setProperty("--y", y + "px");
+        };})
+</script>
